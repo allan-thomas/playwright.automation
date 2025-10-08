@@ -1,6 +1,6 @@
 const {test, expect} = require('@playwright/test');
 
-test('Shopping cart Playwright Test', async ({browser})=> {
+test.only('Shopping cart Playwright Test', async ({browser})=> {
  
     const context = await browser.newContext();
 
@@ -36,12 +36,28 @@ test('Shopping cart Playwright Test', async ({browser})=> {
 
     //await page.waitForLoadState('networkidle');
 
-    await page.locator("div > h5").first().waitFor();
+    await page.locator(".card-body").first().waitFor();
 
-    const titles = await page.locator("div > h5").allTextContents();
+    const productWebelements = page.locator(".card-body");
 
-    console.log(titles);
+    const count = await productWebelements.count();
 
-    console.log(await page.locator("div > h5").first().textContent());
+    const productName = "ZARA COAT 3";
+
+    for (let i = 0; i < count; i++) {
+
+        console.log(await productWebelements.nth(i).locator("b").textContent());
+
+        if ( await productWebelements.nth(i).locator("b").textContent() === productName) {
+
+             await productWebelements.nth(i).locator(".btn.w-10").click();
+
+            console.log("found it");
+
+            break;
+        }
+    }
+
+    await page.pause()
 
 });

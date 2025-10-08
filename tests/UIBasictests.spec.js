@@ -102,7 +102,7 @@ test('Playwright Test with Select', async ({page})=> {
 
 });
 
-test.only('Child Window handling with Playwright', async ({browser})=> {
+test('Child Window handling with Playwright', async ({browser})=> {
  
     const context = await browser.newContext();
 
