@@ -1,6 +1,6 @@
 const {test, expect} = require('@playwright/test');
 
-test.only('Shopping cart Playwright Test', async ({browser})=> {
+test('Shopping cart Playwright Test', async ({browser})=> {
  
     const context = await browser.newContext();
 

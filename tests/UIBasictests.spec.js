@@ -117,7 +117,7 @@ test.only('Child Window handling with Playwright', async ({browser})=> {
         ]
     );
 
-    const text = await page2.locator(".im-para.red").textContent();
+    const text = await page2.locator(".im-para.redr").textContent();
 
     console.log(text);
 

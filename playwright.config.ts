@@ -1,4 +1,5 @@
 import { defineConfig, devices, expect } from '@playwright/test';
+import { trace } from 'console';
 
 
 const config =({
@@ -14,6 +15,8 @@ expect:{
     
     browserName :'chromium',
     headless: false,
+    screenshot: 'on',
+    trace: 'retain-on-failure',
     /* Collect trace when retrying the failed test. See https://playwright.dev/docs/trace-viewer */
   
   },
