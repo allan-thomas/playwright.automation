@@ -102,7 +102,7 @@ test('Playwright Test with Select', async ({page})=> {
 
 });
 
-test('Child Window handling with Playwright', async ({browser})=> {
+test.only('Child Window handling with Playwright', async ({browser})=> {
  
     const context = await browser.newContext();
 
@@ -117,7 +117,7 @@ test('Child Window handling with Playwright', async ({browser})=> {
         ]
     );
 
-    const text = await page2.locator(".im-para.redr").textContent();
+    const text = await page2.locator(".im-para.red").textContent();
 
     console.log(text);
 
