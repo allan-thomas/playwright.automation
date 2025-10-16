@@ -37,6 +37,40 @@ test.only('Shopping cart Playwright Test', async ({browser})=> {
              break;
         }
     }
-    await page.pause();
+    await page.locator("[routerlink*='cart']").click();
 
+    //on Cart Page
+
+    await page.locator("div.cart li").first().waitFor();
+    // const cartProducts = page.locator("div.cart li");
+    // const cartProductsCount = await cartProducts.count();
+    // for (let i = 0; i < cartProductsCount; i++) {
+    //     if ( await cartProducts.nth(i).locator("h3").textContent() == productName) {
+    //         console.log("product is present in the cart");
+    //         break;
+    //     }       
+    // }
+
+    //OR
+
+    const bool = await page.locator("h3:has-text('ZARA COAT 3')").isVisible();
+    expect(bool).toBeTruthy();
+    await page.locator(".btn.btn-primary:has-text('Checkout')").click();
+    //await page.locator("text='Checkout'").click();
+
+    // on Payment Page
+
+    const expiryDateMonthSelctor = page.locator(".input.ddl").first();
+    await expiryDateMonthSelctor.selectOption("09");
+    const expiryDateDaySelctor = page.locator(".input.ddl").last();
+    await expiryDateDaySelctor.selectOption("29");
+    let dataforPaymentPage = ["719", userName, "yy"];
+    for(let i=1;i<=3;i++){
+        await page.locator(".input.txt").nth(i).fill(dataforPaymentPage[i-1]);
+    }
+    
+    await page.locator(".btn.mt-1").click();
+    await expect(page.locator(".mt-1.ng-star-inserted")).toHaveText("* Invalid Coupon");
+    await page.locator(".input.txt.text-validated").last().fill("ind");
+    await page.pause();
 });
