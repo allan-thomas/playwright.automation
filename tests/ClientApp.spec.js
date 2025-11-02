@@ -71,6 +71,8 @@ test.only('Shopping cart Playwright Test', async ({browser})=> {
     
     await page.locator(".btn.mt-1").click();
     await expect(page.locator(".mt-1.ng-star-inserted")).toHaveText("* Invalid Coupon");
+    await page.locator(".input.txt.text-validated").nth(1).fill(""); //for clearing the mail feild above country selection
+    await page.locator(".input.txt.text-validated").nth(1).fill(userName);
     await page.locator(".input.txt.text-validated").last().fill("ind");
     await page.pause();
 });
