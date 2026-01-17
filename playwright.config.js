@@ -1,5 +1,4 @@
 import { defineConfig, devices, expect } from '@playwright/test';
-import { trace } from 'console';
 
 
 const config =({
