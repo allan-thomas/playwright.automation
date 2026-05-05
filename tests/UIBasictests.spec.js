@@ -1,6 +1,6 @@
 const {test, expect} = require('@playwright/test');
 
-test('Browser Context Playwright Test', async ({browser})=> {
+test.only('Browser Context Playwright Test', async ({browser})=> {
  
     const context = await browser.newContext();
 
@@ -36,7 +36,7 @@ test('Browser Context Playwright Test', async ({browser})=> {
 
     await passWord.fill("");
 
-    await passWord.fill("learning");
+    await passWord.fill("Learning@830$3mK2");
 
     await signIn.click();
 
@@ -102,7 +102,7 @@ test('Playwright Test with Select', async ({page})=> {
 
 });
 
-test.only('Child Window handling with Playwright', async ({browser})=> {
+test('Child Window handling with Playwright', async ({browser})=> {
  
     const context = await browser.newContext();
 
@@ -147,6 +147,6 @@ test('Page Playwright Test', async ({page})=> {
 
     console.log(await page.title());
 
-    await expect(page).toHaveTitle("Google");
+    await expect(page).toHaveTitle("Google")
 
 });
