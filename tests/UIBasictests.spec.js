@@ -1,6 +1,6 @@
 const {test, expect} = require('@playwright/test');
 
-test.only('Browser Context Playwright Test', async ({browser})=> {
+test('Browser Context Playwright Test', async ({browser})=> {
  
     const context = await browser.newContext();
 
@@ -44,6 +44,8 @@ test.only('Browser Context Playwright Test', async ({browser})=> {
 
     console.log(await cardTitles.first().textContent());
 
+    console.log(await cardTitles.last().textContent());
+
     console.log(await cardTitles.nth(1).textContent());
 
     const allTitles = await cardTitles.allTextContents();
@@ -54,7 +56,7 @@ test.only('Browser Context Playwright Test', async ({browser})=> {
 
 });
 
-test('Playwright Test with Select', async ({page})=> {
+test.only('Playwright Test with Select', async ({page})=> {
  
     // const context = await browser.newContext();
 
