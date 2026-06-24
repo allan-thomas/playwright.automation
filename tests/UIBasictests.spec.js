@@ -1,6 +1,6 @@
 const {test, expect} = require('@playwright/test');
 
-test('Browser Context Playwright Test', async ({browser})=> {
+test.only('Browser Context Playwright Test', async ({browser})=> {
  
     const context = await browser.newContext();
 
@@ -37,7 +37,7 @@ test('Browser Context Playwright Test', async ({browser})=> {
     await passWord.fill("");
 
     await passWord.fill("Learning@830$3mK2");
-
+    
     await signIn.click();
 
     // after logging in
@@ -56,7 +56,7 @@ test('Browser Context Playwright Test', async ({browser})=> {
 
 });
 
-test.only('Playwright Test with Select', async ({page})=> {
+test('Playwright Test with Select', async ({page})=> {
  
     // const context = await browser.newContext();
 
@@ -80,7 +80,9 @@ test.only('Playwright Test with Select', async ({page})=> {
 
     console.log( await page.locator(".checkmark").last().isChecked());
 
-    await expect(page.locator(".checkmark").last()).toBeChecked();
+    expect( await page.locator(".checkmark").last()).toBeChecked();
+
+    expect( await page.locator(".checkmark").first().isChecked()).toBeFalsy();
 
     const dropdown = page.locator("select.form-control");
 
