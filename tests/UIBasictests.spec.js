@@ -1,6 +1,6 @@
 const {test, expect} = require('@playwright/test');
 
-test.only('Browser Context Playwright Test', async ({browser})=> {
+test('Browser Context Playwright Test', async ({browser})=> {
  
     const context = await browser.newContext();
 
@@ -106,7 +106,7 @@ test('Playwright Test with Select', async ({page})=> {
 
 });
 
-test('Child Window handling with Playwright', async ({browser})=> {
+test.only('Child Window handling with Playwright', async ({browser})=> {
  
     const context = await browser.newContext();
 
@@ -133,7 +133,7 @@ test('Child Window handling with Playwright', async ({browser})=> {
 
     await page.locator("#username").fill(email);
 
-    console.log( await page.locator("#username").inputValue());
+    console.log( await page.locator("#username").inputValue()); //try to use inputValue() instead of textContent() because input field is not a text field, it is an input field
 
     await page2.pause();
 
