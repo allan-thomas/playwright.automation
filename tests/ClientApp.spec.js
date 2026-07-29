@@ -73,6 +73,41 @@ test.only('Shopping cart Playwright Test', async ({browser})=> {
     await expect(page.locator(".mt-1.ng-star-inserted")).toHaveText("* Invalid Coupon");
     await page.locator(".input.txt.text-validated").nth(1).fill(""); //for clearing the mail feild above country selection
     await page.locator(".input.txt.text-validated").nth(1).fill(userName);
-    await page.locator(".input.txt.text-validated").last().fill("ind");
+
+    //select country from dropdown
+
+    await page.locator(".input.txt.text-validated").last().pressSequentially("ind"); //pressSequentially() is a new method in playwright 1.35.0, it is used to type text into an input field one character at a time, simulating the way a user would type. It is useful for testing scenarios where the application responds to each keystroke, such as autocomplete or search suggestions.
+    await page.locator(".ta-results").waitFor();
+    const countryElements = page.locator("button.ta-item");
+    const countryElementsCount = await countryElements.count();
+    for (let i = 0; i < countryElementsCount; i++) {
+        if ( await countryElements.nth(i).textContent() == " India") {
+            await countryElements.nth(i).click();
+            break;
+        }
+    }
+    // await page.locator(".ta-item:has-text('India')").last().waitFor(); //if flaky test, use this line to wait for the element to be visible before clicking it
+    // await page.locator(".ta-item:has-text('India')").last().click();
+
+    //validate email id
+
+    await expect(page.locator("label[type$='text']")).toHaveText(userName);
+
+    //click on place order button
+
+    await page.locator(".btnn").click();
+
+    // validate order confirmation
+
+    await expect (page.locator(".hero-primary")).toHaveText(" Thankyou for the order. ");
+
+
+    //print the order ID from the confirmation page
+    const orderId =await page.locator('label.ng-star-inserted').textContent();
+
+    console.log(orderId.split(" |")[1].trim());
+
+    console.log("Order ID: " + orderId.split(" |")[1].trim());
+
     await page.pause();
 });
