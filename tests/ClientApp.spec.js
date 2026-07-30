@@ -90,24 +90,35 @@ test.only('Shopping cart Playwright Test', async ({browser})=> {
     // await page.locator(".ta-item:has-text('India')").last().click();
 
     //validate email id
-
     await expect(page.locator("label[type$='text']")).toHaveText(userName);
 
     //click on place order button
-
     await page.locator(".btnn").click();
 
     // validate order confirmation
-
     await expect (page.locator(".hero-primary")).toHaveText(" Thankyou for the order. ");
-
 
     //print the order ID from the confirmation page
     const orderId =await page.locator('label.ng-star-inserted').textContent();
-
     console.log(orderId.split(" |")[1].trim());
-
     console.log("Order ID: " + orderId.split(" |")[1].trim());
+
+    //going to order page
+    await page.locator(".btn[routerlink$='myorders']").click();
+    const rows = page.locator("tr.ng-star-inserted");
+    await rows.first().waitFor();
+    const rowsCount = await rows.count();
+    console.log(rowsCount);
+    for (let i = 0; i < rowsCount; i++) {
+        if(await rows.nth(i).locator("th").first().textContent() == orderId.split(" |")[1].trim()) {
+            await rows.nth(i).locator(".btn.btn-primary").click();
+            console.log("Order ID is present in the order page");
+            break;
+        }
+    }
+    const orderIdDetails = await page.locator(".col-text").textContent();
+
+    expect(orderIdDetails.includes(orderId.split(" |")[1].trim())).toBeTruthy();
 
     await page.pause();
 });
