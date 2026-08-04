@@ -2,7 +2,7 @@ import { defineConfig, devices, expect } from '@playwright/test';
 
 
 const config =({
-  testDir: './tests',
+  testDir: './tests', 
   timeout: 20 * 1000,
 
   expect:{
@@ -11,7 +11,11 @@ const config =({
 
   reporter : 'html',
   use: {
-    
+
+    actionTimeout: 10 * 1000,
+    navigationTimeout: 30 * 1000,
+
+
     browserName :'chromium',
     headless: false,
     screenshot: 'on',
