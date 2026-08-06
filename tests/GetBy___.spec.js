@@ -7,7 +7,7 @@ test('test', async ({page}) => {
     const slowExpect = expect.configure({timeout:6000}); //test level timeout for assertion
 
     page.setDefaultTimeout(9000); // test level timeout for action
-    
+
     await page.goto("https://rahulshettyacademy.com/angularpractice/");
     await page.getByLabel("Check me out if you Love IceCreams!").click();
     await page.getByLabel("Employed").click()
@@ -21,6 +21,6 @@ test('test', async ({page}) => {
     await page.getByRole("link",{name:"shop"}).click({timeout:15000}); //if the link takes more than default actiontimeout timeout value. Step level timeout for action
 
     await slowExpect(page.locator(".my-4").first()).toHaveText("Shop Name")
-    await page.locator("app-card").filter({hasText : "Blackberry"}).getByRole("button").click(); 
+    await page.locator("app-card").filter({hasText : "Blackberry"}).getByRole("button").click(); //help me skip the for loops
     await page.pause();
 })
