@@ -52,5 +52,9 @@ test("Assignment", async ({page}) => {
 
     console.log(seatsBeforeBooking);
 
+    //from quest lap
+
+    
+
     await page.pause();
 })
