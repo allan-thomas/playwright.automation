@@ -43,10 +43,14 @@ test("Assignment", async ({page}) => {
     //in the event page
 
     const allEvents = page.locator("#event-card");
-    await allEvents.first().waitFor();
+    await expect(allEvents.first()).toBeVisible();
     await expect (allEvents.filter({hasText:myEventName})).toBeVisible();
 
-    //console.log(Date.now());
+    //getting the seat count
+
+    const seatsBeforeBooking = (await allEvents.locator("span.text-xs").filter({hasText:" seats available"}).first().textContent()).split(" ")[0];
+
+    console.log(seatsBeforeBooking);
 
     await page.pause();
 })
