@@ -36,6 +36,8 @@ test("Single ticket booking is eligible for refund", async ({page}) => {
     //Assert URL is /bookings
     expect( await page.url()).toBe(`${url}/bookings`);
     await page.locator("#booking-card").first().getByRole("button",{name:"View Details"}).click()
+    //Assert booking details is available in details page
+    await expect(page.getByText("Booking Information")).toBeVisible();
 
     await page.pause();
 
