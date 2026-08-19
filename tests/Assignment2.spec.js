@@ -22,7 +22,7 @@ test("Single ticket booking is eligible for refund", async ({page}) => {
 
     //Book first event with 1 ticket
 
-    page.locator("#event-card").first().getByRole("link",{name:"Book Now"}).click()
+    await page.locator("#event-card").first().getByRole("link",{name:"Book Now"}).click()
 
     //in booking page,
     await page.getByLabel("Full Name").fill("zachOG");
