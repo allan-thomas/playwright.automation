@@ -33,15 +33,25 @@ test("Single ticket booking is eligible for refund", async ({page}) => {
     //clicking mybookings link
     await page.locator("nav").getByRole("link",{name:"My Bookings"}).click();
 
+    // step 39 is not asserting due to flakiness hence, we are giving for wait for
+    await page.locator("#booking-card").first().waitFor();
     //Assert URL is /bookings
-    expect( await page.url()).toBe(`${url}/bookings`,{timeout : 5000 });
+    expect(await page.url()).toBe(`${url}/bookings`);
     await page.locator("#booking-card").first().getByRole("button",{name:"View Details"}).click()
+
     //Assert booking details is available in details page
     await expect(page.getByText("Booking Information")).toBeVisible();
+
     //reading reference number from details page
-    console.log(await page.locator(".py-1.text-sm").textContent())
+    const referenceFirstLetter = await page.locator(".py-1.text-sm").textContent()
+
     //reading title name h1 from details page
-    console.log(await page.locator("h1").first().textContent())
+    const titleNameFirstLetter = await page.locator("h1").first().textContent()
+
+    //asserting first character of booking ref equals first character of event title
+    expect(referenceFirstLetter.split("-")[0]).toBe(titleNameFirstLetter.split(" ")[0].split("")[0])
+
+
     await page.pause();
 
     
