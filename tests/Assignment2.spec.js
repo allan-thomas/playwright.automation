@@ -51,6 +51,11 @@ test("Single ticket booking is eligible for refund", async ({page}) => {
     //asserting first character of booking ref equals first character of event title
     expect(referenceFirstLetter.split("-")[0]).toBe(titleNameFirstLetter.split(" ")[0].split("")[0])
 
+    //Click the Check Refund Eligibility button
+    await page.getByRole("button",{name:"Check eligibility for refund?"}).click()
+
+    //Assert: spinner element (#refund-spinner) is immediately visible
+    await expect(page.locator("#refund-spinner")).toBeVisible()
 
     await page.pause();
 
