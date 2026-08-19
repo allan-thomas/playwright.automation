@@ -34,11 +34,14 @@ test("Single ticket booking is eligible for refund", async ({page}) => {
     await page.locator("nav").getByRole("link",{name:"My Bookings"}).click();
 
     //Assert URL is /bookings
-    expect( await page.url()).toBe(`${url}/bookings`);
+    expect( await page.url()).toBe(`${url}/bookings`,{timeout : 5000 });
     await page.locator("#booking-card").first().getByRole("button",{name:"View Details"}).click()
     //Assert booking details is available in details page
     await expect(page.getByText("Booking Information")).toBeVisible();
-
+    //reading reference number from details page
+    console.log(await page.locator(".py-1.text-sm").textContent())
+    //reading title name h1 from details page
+    console.log(await page.locator("h1").first().textContent())
     await page.pause();
 
     
