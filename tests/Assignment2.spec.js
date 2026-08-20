@@ -55,7 +55,13 @@ test("Single ticket booking is eligible for refund", async ({page}) => {
     await page.getByRole("button",{name:"Check eligibility for refund?"}).click()
 
     //Assert: spinner element (#refund-spinner) is immediately visible
-    await expect(page.locator("#refund-spinner")).toBeVisible()
+    await expect(page.locator("#refund-spinner")).toBeVisible();
+
+    //Assert: spinner is no longer visible within 6 seconds
+    await expect(page.locator("#refund-spinner")).not.toBeVisible({timeout:6000});
+
+    // Locate result element by id #refund-result Assert it is visible
+    await expect(page.locator("#refund-result")).toBeVisible()
 
     await page.pause();
 
