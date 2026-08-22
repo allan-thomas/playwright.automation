@@ -1,4 +1,5 @@
 const {test,expect}= require("@playwright/test");
+const { setDefaultAutoSelectFamily } = require("net");
 
 const url = "https://eventhub.rahulshettyacademy.com";
 
@@ -63,8 +64,38 @@ test("Single ticket booking is eligible for refund", async ({page}) => {
     // Locate result element by id #refund-result Assert it is visible
     await expect(page.locator("#refund-result")).toBeVisible()
 
-    await page.pause();
+    //Assert it contains text Eligible for refund
+    await expect(page.locator("#refund-result")).toContainText("Eligible for refund")
 
+    //Assert it contains text Single-ticket bookings qualify for a full refund
+    await expect(page.locator("#refund-result")).toContainText("Single-ticket bookings qualify for a full refund")
+
+})
+
+test.only("Group ticket booking is NOT eligible for refund", async ({page}) =>{
     
+    loginAndGoToBooking(page)
+
+    //Book first event with 1 ticket
+
+    await page.locator("#event-card").first().getByRole("link",{name:"Book Now"}).click()
+
+    await page.locator("button").nth(5).waitFor()
+
+    //in booking page, click the + button twice to increase quantity to 3 before filling the form
+    let i = 0;
+    while (i<2){
+        await page.locator("button").nth(5).click()
+        //page.pause()
+        i++
+    }
+    await page.getByLabel("Full Name").fill("zachOG");
+    await page.locator("#customer-email").fill(email);
+    await page.getByPlaceholder("+91 98765 43210").fill("8888888888");
+    await page.locator(".confirm-booking-btn").click();
+
+    page.pause()
+
+
 
 })
