@@ -80,21 +80,22 @@ test.only("Group ticket booking is NOT eligible for refund", async ({page}) =>{
 
     await page.locator("#event-card").first().getByRole("link",{name:"Book Now"}).click()
 
-    await page.locator("button").nth(5).waitFor()
+    //waiting for "+" button to be populated in booking page 
+    await page.getByRole("button",{name:"+"}).waitFor()
 
     //in booking page, click the + button twice to increase quantity to 3 before filling the form
     let i = 0;
     while (i<2){
-        await page.locator("button").nth(5).click()
-        //page.pause()
+        await page.getByRole("button").nth(3).click()
         i++
     }
     await page.getByLabel("Full Name").fill("zachOG");
     await page.locator("#customer-email").fill(email);
     await page.getByPlaceholder("+91 98765 43210").fill("8888888888");
+    await page.pause()
     await page.locator(".confirm-booking-btn").click();
 
-    page.pause()
+    
 
 
 
