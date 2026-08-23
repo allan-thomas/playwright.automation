@@ -92,11 +92,46 @@ test.only("Group ticket booking is NOT eligible for refund", async ({page}) =>{
     await page.getByLabel("Full Name").fill("zachOG");
     await page.locator("#customer-email").fill(email);
     await page.getByPlaceholder("+91 98765 43210").fill("8888888888");
-    await page.pause()
     await page.locator(".confirm-booking-btn").click();
 
-    
+    //clicking mybookings link
+    await page.locator("nav").getByRole("link",{name:"My Bookings"}).click();
 
+    // step 39 is not asserting due to flakiness hence, we are giving for wait for
+    await page.locator("#booking-card").first().waitFor();
+    //Assert URL is /bookings
+    expect(await page.url()).toBe(`${url}/bookings`);
+    await page.locator("#booking-card").first().getByRole("button",{name:"View Details"}).click()
 
+    //Assert booking details is available in details page
+    await expect(page.getByText("Booking Information")).toBeVisible();
 
+    //reading reference number from details page
+    const referenceFirstLetter = await page.locator(".py-1.text-sm").textContent()
+
+    //reading title name h1 from details page
+    const titleNameFirstLetter = await page.locator("h1").first().textContent()
+
+    //asserting first character of booking ref equals first character of event title
+    expect(referenceFirstLetter.split("-")[0]).toBe(titleNameFirstLetter.split(" ")[0].split("")[0])
+
+    //Click the Check Refund Eligibility button
+    await page.getByRole("button",{name:"Check eligibility for refund?"}).click()
+
+    //Assert: spinner element (#refund-spinner) is immediately visible
+    await expect(page.locator("#refund-spinner")).toBeVisible();
+
+    //Assert: spinner is no longer visible within 6 seconds
+    await expect(page.locator("#refund-spinner")).not.toBeVisible({timeout:6000});
+
+    // Locate result element by id #refund-result Assert it is visible
+    await expect(page.locator("#refund-result")).toBeVisible()
+
+    //Assert it contains text Eligible for refund
+    await expect(page.locator("#refund-result")).toContainText("Not eligible for refund")
+
+    //Assert it contains text Single-ticket bookings qualify for a full refund
+    await expect(page.locator("#refund-result")).toContainText("Group bookings (3 tickets) are non-refundable")
+
+    await page.pause()
 })
