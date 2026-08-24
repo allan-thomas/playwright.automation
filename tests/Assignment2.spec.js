@@ -72,7 +72,7 @@ test("Single ticket booking is eligible for refund", async ({page}) => {
 
 })
 
-test.only("Group ticket booking is NOT eligible for refund", async ({page}) =>{
+test("Group ticket booking is NOT eligible for refund", async ({page}) =>{
     
     loginAndGoToBooking(page)
 
@@ -133,5 +133,5 @@ test.only("Group ticket booking is NOT eligible for refund", async ({page}) =>{
     //Assert it contains text Single-ticket bookings qualify for a full refund
     await expect(page.locator("#refund-result")).toContainText("Group bookings (3 tickets) are non-refundable")
 
-    await page.pause()
+    //await page.pause()
 })
