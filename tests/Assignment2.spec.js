@@ -1,5 +1,4 @@
 const {test,expect}= require("@playwright/test");
-const { setDefaultAutoSelectFamily } = require("net");
 
 const url = "https://eventhub.rahulshettyacademy.com";
 
@@ -120,7 +119,7 @@ test("Group ticket booking is NOT eligible for refund", async ({page}) =>{
 
     //Assert: spinner element (#refund-spinner) is immediately visible
     await expect(page.locator("#refund-spinner")).toBeVisible();
-
+ 
     //Assert: spinner is no longer visible within 6 seconds
     await expect(page.locator("#refund-spinner")).not.toBeVisible({timeout:6000});
 
