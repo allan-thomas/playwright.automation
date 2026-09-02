@@ -28,5 +28,11 @@ test("Popup Validations",async({page})=>{
     //for clicking on All access plan link inside the frame
     await framesPage.locator("li a[href*='lifetime-access']:visible").click()
 
-    await page.pause()
+    const number = (await framesPage.locator(".text h2").textContent()).split(" ")[1].trim()
+
+    console.log(number)
+
+    expect(number).toBe("13,522")
+
+    //await page.pause()
 })
