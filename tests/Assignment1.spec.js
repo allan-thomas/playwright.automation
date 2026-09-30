@@ -44,11 +44,13 @@ test("Assignment", async ({page}) => {
 
     const allEvents = page.locator("#event-card");
     await expect(allEvents.first()).toBeVisible();
-    await expect (allEvents.filter({hasText:myEventName})).toBeVisible();
+    const myEvent = allEvents.filter({hasText:myEventName});
+    await expect (myEvent).toBeVisible();
+
 
     //getting the seat count
 
-    const seatsBeforeBooking = parseInt((await allEvents.locator("span.text-xs").filter({hasText:" seats available"}).first().textContent()).split(" ")[0]);
+    const seatsBeforeBooking = parseInt((await myEvent.locator("span.text-xs").filter({hasText:" seats available"}).first().textContent()).split(" ")[0]);
     console.log(seatsBeforeBooking);
 
     //clicking the book now button
@@ -70,6 +72,7 @@ test("Assignment", async ({page}) => {
 
     //clicking mybookings link
     await page.locator("nav").getByRole("link",{name:"My Bookings"}).click();
+    await page.locator("h1").waitFor() //for getting the bookings url properly(line 76), a lil flaky
     await expect(page.url()).toBe(`${url}/bookings`)
     console.log(page.url());
     const bookingCards = page.locator('#booking-card')
@@ -86,11 +89,13 @@ test("Assignment", async ({page}) => {
     const updatedCard       = eventCards.filter({ hasText: myEventName }).first();
     await expect(updatedCard).toBeVisible();
 
+    console.log(await updatedCard.locator("h3").textContent())
+
     const seatsAfterBooking = parseInt((await updatedCard.locator(".text-xs").filter({hasText:" seats available"}).textContent()).split(" ")[0].trim());
     await page.pause()
     console.log(`Seats after booking: ${seatsAfterBooking}`);
 
     // Booked 1 ticket — count must drop by exactly 1
-    expect(seatsAfterBooking).toBe(seatsBeforeBooking - 1);
+    expect(seatsAfterBooking).toBe(seatsBeforeBooking - 1); //there is somthing wrong figuring it out
     await page.pause();
 })
