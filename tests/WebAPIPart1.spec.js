@@ -7,7 +7,7 @@ let token;
 
 test.beforeAll(async () => {
 
-    const apiContext = await request.newContext();
+    const apiContext = await request.newContext({ignoreHTTPSErrors: true}); //{ignoreHTTPSErrors: true} is given to skip the local issuer certificate issue
 
     //post to the URL
     const loginResponse = await apiContext.post("https://rahulshettyacademy.com/api/ecom/auth/login",{data:loginPayload})
